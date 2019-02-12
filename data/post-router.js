@@ -73,7 +73,11 @@ router.delete('/:id', async (req, res) => {
 
 router.put('/:id', async (req, res) => {
     try {
+        if (!req.body.title || !req.body.contents) {
+            return res.status(400).json({ errorMessage: "Please provide title and contents for the post." })
+        }
         const post = await Funcs.update(req.params.id, req.body)
+
         if(post) {
             res.status(200).json(post)
         } else {
