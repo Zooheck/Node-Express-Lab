@@ -54,5 +54,22 @@ router.post('/', async (req, res) => {
     }
 });
 
+router.delete('/:id', async (req, res) => {
+    try {
+        const count = await Funcs.remove(req.params.id)
+        if (count > 0) {
+            res.status(200).json({ message: "This quotation has been deleted"})
+        } else {
+            res.status(404).json({ message: "Could not find quotation with this ID."})
+        }
+    }
+    catch (err) {
+        console.log(err);
+        res.status(500).json({
+            message: "The post with the specified ID does not exist."
+        })
+    }
+});
+
 
 module.exports = router;
