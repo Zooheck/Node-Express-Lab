@@ -35,4 +35,24 @@ router.get('/:id', async (req, res) => {
         })
     }
 });
+
+router.post('/', async (req, res) => {
+    try {
+        const post = await Funcs.insert(req.body);
+        if (!post) {
+            return res.status(400).json({ errorMessage: "Please provide title and contents for the post." })
+        } else {
+            res.status(201).json(post)
+        }
+
+    }
+    catch(err) {
+        console.log(err);
+        res.status(500).json({
+            errorMessage: "Please provide title and contents for the post."
+    })
+    }
+});
+
+
 module.exports = router;
