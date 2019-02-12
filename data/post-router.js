@@ -58,9 +58,9 @@ router.delete('/:id', async (req, res) => {
     try {
         const count = await Funcs.remove(req.params.id)
         if (count > 0) {
-            res.status(200).json({ message: "This quotation has been deleted"})
+            res.status(200).json({ message: "This post has been deleted"})
         } else {
-            res.status(404).json({ message: "Could not find quotation with this ID."})
+            res.status(404).json({ message: "Could not find post with this ID."})
         }
     }
     catch (err) {
@@ -71,5 +71,20 @@ router.delete('/:id', async (req, res) => {
     }
 });
 
-
+router.put('/:id', async (req, res) => {
+    try {
+        const post = await Funcs.update(req.params.id, req.body)
+        if(post) {
+            res.status(200).json(post)
+        } else {
+            res.status(404).json({ message: 'This post could not be found.'})
+        }
+    }
+    catch (err) {
+        console.log(err)
+        res.status(500).json({
+            message: 'Error updating the post'
+        })
+    }
+});
 module.exports = router;
